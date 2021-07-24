@@ -19,5 +19,6 @@ import mainapp.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', mainapp.views.index, name="index")
+    path('', mainapp.views.index, name="index"),
+    path('renderWine/', mainapp.views.renderWine),
 ]
