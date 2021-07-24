@@ -27,6 +27,7 @@ function renderWine() {
             vino = JSON.parse(ajax.responseText);
             drawBlog(vino);
             console.log('todo bien')
+            // console.log(vino.tipo_vino)
         }
     }
     ajax.open('get', '/renderWine', true);

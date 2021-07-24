@@ -16,13 +16,16 @@ def index(request):
 
 def renderWine(request):
     if request.method == 'GET':
-        response = Tipo.objects.all().values_list('tipo_vino', flat=True)
-        # response = Tipo.objects.raw("SELECT id, tipo_vino FROM mainapp_tipo")
-        # return JsonResponse(response.json())
-        return HttpResponse(
-            json.dumps(response),
-            content_type="application/json"
-        )
+        # response = Tipo.objects.all().values_list('tipo_vino', flat=True)
+        response = Tipo.objects.raw("SELECT id, tipo_vino FROM mainapp_tipo")
+        # response = Tipo.objects.all()
+        data = serializers.serialize('json', list(response))
+        return HttpResponse(json.dumps(data))
+        # return JsonResponse({"tipo":data})
+        # return HttpResponse(
+        #     json.dumps(response),
+        #     content_type="application/json"
+        # )
 
 
     # public function renderBlog() {
