@@ -20,5 +20,6 @@ import mainapp.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.views.index, name="index"),
-    path('renderWine/', mainapp.views.renderWine),
+    path('kindOfWine/', mainapp.views.kindOfWine),
+    path('searchWine/', mainapp.views.searchWine, name="search-wine"),
 ]

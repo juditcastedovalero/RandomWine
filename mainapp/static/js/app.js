@@ -1,6 +1,6 @@
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    renderWine()
+    kindOfWine()
 });
 
 function objetoAjax() {
@@ -20,19 +20,84 @@ function objetoAjax() {
     return xmlhttp;
 }
 
-function renderWine() {
+// NUEVO
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+// FIN NUEVO
+
+function kindOfWine() {
     var ajax = new objetoAjax();
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            vino = JSON.parse(ajax.responseText);
-            drawBlog(vino);
-            console.log('todo bien')
-            // console.log(vino.tipo_vino)
+            response = JSON.parse(ajax.responseText);
+            vino = JSON.parse(response.wines);
+            console.log(vino)
+            drawWine(vino)
+            // console.log(vino[0]["fields"]["tipo_vino"])
         }
     }
-    ajax.open('get', '/renderWine', true);
+    ajax.open('get', '/kindOfWine', true);
     ajax.send();
 }
+
+function drawWine(vino) {
+    let selecTipoVino = document.querySelector('#tipo')
+    for (let i = 0; i < vino.length; i++) {
+        let option = document.createElement("option")
+        option.setAttribute('value', vino[i]['pk'])
+        option.textContent = vino[i]['fields']['tipo_vino']
+        selecTipoVino.appendChild(option)
+    }
+}
+
+function searchWines() {
+    // NUEVO
+    const csrftoken = getCookie('csrftoken');
+    // FIN NUEVO
+    var datasend = new FormData();
+    
+    let tipo_vino = document.getElementById('tipo').value
+    // console.log("Tipo vino: ", tipo_vino)
+
+    let max_price = document.getElementById('price').value
+    // console.log("Precio: ", max_price)
+    
+    // NUEVO
+    datasend.append('csrfmiddlewaretoken', csrftoken);
+    // END NUEVO
+    
+    datasend.append('tipo_vino', tipo_vino);
+    datasend.append('price', price);
+
+    console.log('token:', csrftoken)
+
+    var ajax = new objetoAjax();
+    ajax.onreadystatechange = function() {
+        if (ajax.readyState == 4 && ajax.status == 200) {
+            console.log('todo bien')
+        }
+    }
+    ajax.open('POST', '/searchWine/', true);
+    ajax.send(datasend);
+    
+
+}
+
+//  path('searchWine/', mainapp.views.searchWine, name="search-wine"),
+
 
 // function renderBlog() {
 //     let titulo = document.querySelector('.container--titulo input');
