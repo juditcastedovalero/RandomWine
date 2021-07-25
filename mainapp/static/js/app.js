@@ -20,7 +20,6 @@ function objetoAjax() {
     return xmlhttp;
 }
 
-// NUEVO
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -36,7 +35,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-// FIN NUEVO
 
 function kindOfWine() {
     var ajax = new objetoAjax();
@@ -64,21 +62,14 @@ function drawWine(vino) {
 }
 
 function searchWines() {
-    // NUEVO
     const csrftoken = getCookie('csrftoken');
-    // FIN NUEVO
     var datasend = new FormData();
     
     let tipo_vino = document.getElementById('tipo').value
-    // console.log("Tipo vino: ", tipo_vino)
-
     let max_price = document.getElementById('price').value
-    // console.log("Precio: ", max_price)
-    
-    // NUEVO
+
     datasend.append('csrfmiddlewaretoken', csrftoken);
-    // END NUEVO
-    
+
     datasend.append('tipo_vino', tipo_vino);
     datasend.append('price', price);
 
@@ -87,13 +78,12 @@ function searchWines() {
     var ajax = new objetoAjax();
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
-            console.log('todo bien')
+            response = JSON.parse(ajax.responseText);
+            console.log(response)
         }
     }
     ajax.open('POST', '/searchWine/', true);
     ajax.send(datasend);
-    
-
 }
 
 //  path('searchWine/', mainapp.views.searchWine, name="search-wine"),
