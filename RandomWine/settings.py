@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'RandomWine.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bd_random_wine',
+        'NAME': 'bd_random_wines',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

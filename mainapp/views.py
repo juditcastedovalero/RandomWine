@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from mainapp.models import Bodega, Variedad, Tipo, Vino
 
-# NEW
 from django.core import serializers
 from django.http import JsonResponse
 
-
+# NEW
+from django.db.models import Subquery
 
 # END NEW
 
@@ -26,5 +26,13 @@ def kindOfWine(request):
 
 def searchWine(request):
     if request.method == 'POST':
-        data = 'OK'
-        return JsonResponse({"todo bien": data})
+        tipo_vino = int(request.POST['tipo_vino'])
+        price = int(request.POST['price'])
+        wines = Vino.objects.filter(
+            precio_medio__lte=price, 
+            tipo_id=tipo_vino)
+        bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
+        data_wines = serializers.serialize('json', wines)
+        data_bodegas = serializers.serialize('json', bodegas)
+        return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
+

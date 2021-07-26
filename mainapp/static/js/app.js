@@ -71,7 +71,7 @@ function searchWines() {
     datasend.append('csrfmiddlewaretoken', csrftoken);
 
     datasend.append('tipo_vino', tipo_vino);
-    datasend.append('price', price);
+    datasend.append('price', max_price);
 
     console.log('token:', csrftoken)
 
@@ -79,63 +79,38 @@ function searchWines() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             response = JSON.parse(ajax.responseText);
-            console.log(response)
+            vino = JSON.parse(response.wines);
+            bodega = JSON.parse(response.bodegas);
+            console.log('vinos', vino)
+            console.log('bodegas:', bodega)
         }
     }
     ajax.open('POST', '/searchWine/', true);
     ajax.send(datasend);
 }
 
-//  path('searchWine/', mainapp.views.searchWine, name="search-wine"),
+// def searchWine(request):
+//     if request.method == 'POST':
+//         tipo_vino = int(request.POST['tipo_vino'])
+//         price = int(request.POST['price'])
+//         wines = Vino.objects.filter(
+//             precio_medio__lte=price, 
+//             tipo_id=tipo_vino)
+//         bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
+//         data_wines = serializers.serialize('json', wines)
+//         data_bodegas = serializers.serialize('json', bodegas)
+//         return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
 
 
-// function renderBlog() {
-//     let titulo = document.querySelector('.container--titulo input');
-//     let descripcion = document.querySelector('.container--descripcion input');
-//     let imgAntes = document.querySelector('.container--img-antes input');
-//     let imgDespues = document.querySelector('.container--img-despues input');
-//     if (titulo) {
-//         titulo.value = "";
-//     }
-//     if (descripcion) {
-//         descripcion.value = "";
-//     }
-//     if (imgAntes) {
-//         imgAntes.value = "";
-//     }
-//     if (imgDespues) {
-//         imgDespues.value = "";
-//     }
 
-//     var ajax = new objetoAjax();
-//     ajax.onreadystatechange = function() {
-//         if (ajax.readyState == 4 && ajax.status == 200) {
-//             entries = JSON.parse(ajax.responseText);
-//             drawBlog(entries);
-//         }
-//     }
-//     ajax.open('get', 'renderBlog', true);
-//     ajax.send();
-// }
-
-// function drawBlog(entries) {
-//     let divContainerBlog = document.querySelector('.container--blog');
-//     while (divContainerBlog.firstChild) { // borrem tots els fills
-//         divContainerBlog.removeChild(divContainerBlog.firstChild);
-//     }
-//     for (let i = 0; i < entries.length; i++) {
-//         const containerTitleBlog = document.createElement('div');
-//         containerTitleBlog.classList.add('container--title-blog');
-//         divContainerBlog.appendChild(containerTitleBlog);
-//         // h2 titulo
-//         const tituloBlog = document.createElement('h2');
-//         tituloBlog.textContent = entries[i].titulo;
-//         containerTitleBlog.appendChild(tituloBlog);
-//         // Eliminar
-//         const iTrash = document.createElement('i');
-//         iTrash.classList.add('fas');
-//         iTrash.classList.add('fa-trash');
-//         iTrash.setAttribute('onclick', 'onClickDropEntry(event,' + entries[i].id + ')');
-//         containerTitleBlog.appendChild(iTrash);
-//     }
-// }
+// def searchWine(request):
+//     if request.method == 'POST':
+//         tipo_vino = int(request.POST['tipo_vino'])
+//         price = int(request.POST['price'])
+//         wines = Vino.objects.filter(
+//             precio_medio__lte=price, 
+//             tipo_id=tipo_vino)
+//         bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
+//         data_wines = serializers.serialize('json', wines)
+//         data_bodegas = serializers.serialize('json', bodegas)
+//         return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
