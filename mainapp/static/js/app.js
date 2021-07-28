@@ -36,14 +36,15 @@ function getCookie(name) {
     return cookieValue;
 }
 
+// Obtener todos los tipos de vinos
 function kindOfWine() {
     var ajax = new objetoAjax();
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             response = JSON.parse(ajax.responseText);
             vino = JSON.parse(response.wines);
-            console.log(vino)
-            drawWine(vino)
+            console.log('tipos de vinos', vino)
+            drawForm(vino)
             // console.log(vino[0]["fields"]["tipo_vino"])
         }
     }
@@ -51,7 +52,8 @@ function kindOfWine() {
     ajax.send();
 }
 
-function drawWine(vino) {
+// Dibujar el formulario para buscar el vino
+function drawForm(vino) {
     let selecTipoVino = document.querySelector('#tipo')
     for (let i = 0; i < vino.length; i++) {
         let option = document.createElement("option")
@@ -61,6 +63,7 @@ function drawWine(vino) {
     }
 }
 
+// Manda los datos para buscar resultados de los valores pasados por el formulario
 function searchWines() {
     const csrftoken = getCookie('csrftoken');
     var datasend = new FormData();
@@ -77,18 +80,37 @@ function searchWines() {
 
     var ajax = new objetoAjax();
     ajax.onreadystatechange = function() {
-        if (ajax.readyState == 4 && ajax.status == 200) {
-            response = JSON.parse(ajax.responseText);
-            vino = JSON.parse(response.wine);
-            bodega = JSON.parse(response.bodega);
-            tipo_response = JSON.parse(response.tipo);
-            console.log('vino', vino)
-            console.log('bodega:', bodega)
-            console.log('tipo:', tipo_response)
+        if (ajax.readyState == 4) {
+            if(ajax.status==200) {
+                response = JSON.parse(ajax.responseText);
+                drawWine(response)
+            }
         }
     }
     ajax.open('POST', '/searchWine/', true);
     ajax.send(datasend);
+}
+
+// Dibuja el vino resultado de la query
+function drawWine(response) {
+    let imageContainer = document.getElementById('image')
+    vino = JSON.parse(response.wine);
+    bodega = JSON.parse(response.bodega);
+    tipo_response = JSON.parse(response.tipo);
+    console.log('vino', vino)
+    console.log('bodega:', bodega)
+    console.log('tipo:', tipo_response)
+
+    var currentUrl = window.location.href;
+    let img = document.createElement('img')
+    img.setAttribute('src', currentUrl + 'media/' + vino[0]['fields']['url_imagen'])
+    console.log(currentUrl)
+
+    while (imageContainer.firstChild) { // borrem tots els fills
+        imageContainer.removeChild(imageContainer.firstChild);
+    }
+
+    imageContainer.appendChild(img)
 }
 
 // def searchWine(request):
