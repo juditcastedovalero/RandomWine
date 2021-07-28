@@ -80,9 +80,9 @@ function searchWines() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             response = JSON.parse(ajax.responseText);
             vino = JSON.parse(response.wines);
-            bodega = JSON.parse(response.bodegas);
+            // bodega = JSON.parse(response.bodegas);
             console.log('vinos', vino)
-            console.log('bodegas:', bodega)
+            // console.log('bodegas:', bodega)
         }
     }
     ajax.open('POST', '/searchWine/', true);
@@ -114,3 +114,18 @@ function searchWines() {
 //         data_wines = serializers.serialize('json', wines)
 //         data_bodegas = serializers.serialize('json', bodegas)
 //         return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
+
+
+
+
+// RANDOM
+// wines_pk = []
+// for wine in wines:
+//     wines_pk.append({
+//         'pk': wine.id
+//     })
+// vinos_id = {
+//     'wine_pk': wines_pk
+// }
+// # Random id de la consulta de vinos después de filtrar
+// vino_id = vino_id = vinos_id['wine_pk'][random_position]

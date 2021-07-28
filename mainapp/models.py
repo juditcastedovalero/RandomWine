@@ -10,10 +10,10 @@ class Bodega(models.Model):
 
 class Variedad(models.Model):
     nombre_variedad = models.CharField(max_length=150, verbose_name="Variedad")
-    def __str__(self):
-        return self.nombre_variedad
     class Meta:
         verbose_name_plural = "Variedades"
+    def __str__(self):
+        return self.nombre_variedad
 
 class Tipo(models.Model):
     tipo_vino = models.CharField(max_length=150, verbose_name="Tipo")

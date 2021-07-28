@@ -5,7 +5,7 @@ from django.core import serializers
 from django.http import JsonResponse
 
 # NEW
-from django.db.models import Subquery
+import random
 
 # END NEW
 
@@ -28,11 +28,20 @@ def searchWine(request):
     if request.method == 'POST':
         tipo_vino = int(request.POST['tipo_vino'])
         price = int(request.POST['price'])
+        bodega = Bodega.objects.all()
         wines = Vino.objects.filter(
             precio_medio__lte=price, 
             tipo_id=tipo_vino)
-        bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
-        data_wines = serializers.serialize('json', wines)
-        data_bodegas = serializers.serialize('json', bodegas)
-        return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
+        wines_count = Vino.objects.filter(
+            precio_medio__lte=price, 
+            tipo_id=tipo_vino).count()
+        wines_pk = []
+        random_position = 0
+        if wines_count > 0:
+            for wine in wines:
+                wines_pk.append(wine.id)
+                random_position = random.choice(wines_pk)
+            # Random id de la consulta de vinos después de filtrar
+            return JsonResponse({"wines": random_position})
+
 
