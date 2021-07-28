@@ -28,7 +28,6 @@ def searchWine(request):
     if request.method == 'POST':
         tipo_vino = int(request.POST['tipo_vino'])
         price = int(request.POST['price'])
-        bodega = Bodega.objects.all()
         wines = Vino.objects.filter(
             precio_medio__lte=price, 
             tipo_id=tipo_vino)
@@ -36,12 +35,18 @@ def searchWine(request):
             precio_medio__lte=price, 
             tipo_id=tipo_vino).count()
         wines_pk = []
-        random_position = 0
+        random_wine_id = 0
+        # Si hay al menos un vino...
         if wines_count > 0:
+            # Recorremos los vinos
             for wine in wines:
+                # Conseguimos el id de los vinos
                 wines_pk.append(wine.id)
-                random_position = random.choice(wines_pk)
-            # Random id de la consulta de vinos después de filtrar
-            return JsonResponse({"wines": random_position})
+                # Escogemos un vino aleatorio gracias al id
+                random_wine_id = random.choice(wines_pk)
+            # Buscamos el vino con ese id
+            wine = Vino.objects.filter(pk=random_wine_id)
+            data_wine = serializers.serialize('json', wine)
+            return JsonResponse({"wines": data_wine})
 
 
