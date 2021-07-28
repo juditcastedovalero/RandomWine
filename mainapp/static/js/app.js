@@ -79,10 +79,12 @@ function searchWines() {
     ajax.onreadystatechange = function() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             response = JSON.parse(ajax.responseText);
-            vino = JSON.parse(response.wines);
-            // bodega = JSON.parse(response.bodegas);
-            console.log('vinos', vino)
-            // console.log('bodegas:', bodega)
+            vino = JSON.parse(response.wine);
+            bodega = JSON.parse(response.bodega);
+            tipo_response = JSON.parse(response.tipo);
+            console.log('vino', vino)
+            console.log('bodega:', bodega)
+            console.log('tipo:', tipo_response)
         }
     }
     ajax.open('POST', '/searchWine/', true);
