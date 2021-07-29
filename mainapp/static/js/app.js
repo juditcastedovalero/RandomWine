@@ -84,11 +84,40 @@ function searchWines() {
             if(ajax.status==200) {
                 response = JSON.parse(ajax.responseText);
                 drawWine(response)
+            } else {
+                drawError()
             }
         }
     }
     ajax.open('POST', '/searchWine/', true);
     ajax.send(datasend);
+}
+
+function drawError() {
+    let error = document.querySelector('.error')
+
+    let wineContainer = document.getElementById('container-wine')
+    let imageContainer = document.getElementById('image')
+    let bodegaContainer = document.getElementById('bodega')
+    let tipoContainer = document.getElementById('tipo_vino')
+    let uvaContainer = document.getElementById('uva')
+    while (imageContainer.firstChild) { // borrem tots els fills
+        imageContainer.removeChild(imageContainer.firstChild);
+    }
+    while (bodegaContainer.firstChild) { // borrem tots els fills
+        bodegaContainer.removeChild(bodegaContainer.firstChild);
+    }
+    while (tipoContainer.firstChild) { // borrem tots els fills
+        tipoContainer.removeChild(tipoContainer.firstChild);
+    }
+    while (uvaContainer.firstChild) { // borrem tots els fills
+        uvaContainer.removeChild(uvaContainer.firstChild);
+    }
+
+    wineContainer.classList.remove("container-wine");
+
+    error.textContent = 'No se han encontrado resultados'
+
 }
 
 // Dibuja el vino resultado de la query
@@ -98,6 +127,8 @@ function drawWine(response) {
     let bodegaContainer = document.getElementById('bodega')
     let tipoContainer = document.getElementById('tipo_vino')
     let uvaContainer = document.getElementById('uva')
+
+    let error = document.querySelector('.error')
 
     vino_response = JSON.parse(response.wine);
     bodega_response = JSON.parse(response.bodega);
@@ -137,6 +168,8 @@ function drawWine(response) {
     while (uvaContainer.firstChild) { // borrem tots els fills
         uvaContainer.removeChild(uvaContainer.firstChild);
     }
+
+    error.textContent = ''
 
     imageContainer.appendChild(img)
     bodegaContainer.appendChild(pBodega)

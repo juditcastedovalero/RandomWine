@@ -11,6 +11,9 @@ body {
     width: fit-content;
   }
 }
+.error {
+  color: #850404;
+}
 .container-wine {
   width: fit-content;
   margin: auto;
