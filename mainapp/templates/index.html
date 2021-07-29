@@ -3,20 +3,32 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Random Wine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body id="home">
     {% comment %} KIND OF WINE {% endcomment %}
-    <label for="tipo">Tipo de vino:</label>
-    <select name="tipo" id="tipo">
-    </select>
-    {% comment %} PRICE {% endcomment %}
-    <label for="quantity">Precio máximo aproximado €:</label>
-    <input type="number" id="price" name="price" min="1" value="15"> 
-    <input type="button" value="Buscar" onclick="searchWines()">
-
+    <main class="main">    
+        <h1>¿No sabes qué vino tomar?</h1>
+        <h2>Filtra por el tipo de vino y precio máximo para saber cuál es tu próxima elección</h2>
+        <div class="form">
+            <div class="tipo">        
+                <label for="tipo">Tipo de vino:</label>
+                <select name="tipo" id="tipo"></select>
+            </div>
+            {% comment %} PRICE {% endcomment %}
+            <div class="price">        
+                <label for="quantity">Precio máximo €:</label>
+                <input type="number" id="price" name="price" min="1" value="15"> 
+            </div>
+            <input type="button" value="Buscar" onclick="searchWines()">
+        </div>
+    </main>
     
     <div id = 'container-wine'>
         <div id = 'image'></div>

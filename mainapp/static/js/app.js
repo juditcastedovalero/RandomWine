@@ -93,6 +93,7 @@ function searchWines() {
 
 // Dibuja el vino resultado de la query
 function drawWine(response) {
+    let wineContainer = document.getElementById('container-wine')
     let imageContainer = document.getElementById('image')
     let bodegaContainer = document.getElementById('bodega')
     let tipoContainer = document.getElementById('tipo_vino')
@@ -112,11 +113,17 @@ function drawWine(response) {
     img.setAttribute('src', currentUrl + 'media/' + vino_response[0]['fields']['url_imagen'])
     console.log(currentUrl)
 
-    let pBodega = document.createElement('p')
-    let pTipo = document.createElement('p')
+    wineContainer.setAttribute('class', 'container-wine')
 
-    pBodega.textContent = "Bodega: " + bodega_response[0]['fields']['nombre_bodega']
-    pTipo.textContent = "Tipo: " + tipo_response[0]['fields']['tipo_vino']
+    let pBodega = document.createElement('p')
+    pBodega.textContent = "Bodega: "
+    let spanBodega = document.createElement('span')
+    let pTipo = document.createElement('p')
+    pTipo.textContent = 'Tipo: '
+    let spanTipo = document.createElement('span')
+
+    spanBodega.textContent = bodega_response[0]['fields']['nombre_bodega']
+    spanTipo.textContent = tipo_response[0]['fields']['tipo_vino']
 
     while (imageContainer.firstChild) { // borrem tots els fills
         imageContainer.removeChild(imageContainer.firstChild);
@@ -133,7 +140,9 @@ function drawWine(response) {
 
     imageContainer.appendChild(img)
     bodegaContainer.appendChild(pBodega)
+    pBodega.appendChild(spanBodega)
     tipoContainer.appendChild(pTipo)
+    pTipo.appendChild(spanTipo)
     let pUva = document.createElement('p')
     pUva.textContent = 'Uva: '
     uvaContainer.appendChild(pUva)
