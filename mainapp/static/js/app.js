@@ -94,62 +94,57 @@ function searchWines() {
 // Dibuja el vino resultado de la query
 function drawWine(response) {
     let imageContainer = document.getElementById('image')
-    vino = JSON.parse(response.wine);
-    bodega = JSON.parse(response.bodega);
+    let bodegaContainer = document.getElementById('bodega')
+    let tipoContainer = document.getElementById('tipo_vino')
+    let uvaContainer = document.getElementById('uva')
+
+    vino_response = JSON.parse(response.wine);
+    bodega_response = JSON.parse(response.bodega);
     tipo_response = JSON.parse(response.tipo);
+    variedad_response = JSON.parse(response.variedad);
     console.log('vino', vino)
-    console.log('bodega:', bodega)
+    console.log('bodega:', bodega_response)
     console.log('tipo:', tipo_response)
+    console.log('variedad:', variedad_response)
 
     var currentUrl = window.location.href;
     let img = document.createElement('img')
-    img.setAttribute('src', currentUrl + 'media/' + vino[0]['fields']['url_imagen'])
+    img.setAttribute('src', currentUrl + 'media/' + vino_response[0]['fields']['url_imagen'])
     console.log(currentUrl)
+
+    let pBodega = document.createElement('p')
+    let pTipo = document.createElement('p')
+
+    pBodega.textContent = "Bodega: " + bodega_response[0]['fields']['nombre_bodega']
+    pTipo.textContent = "Tipo: " + tipo_response[0]['fields']['tipo_vino']
 
     while (imageContainer.firstChild) { // borrem tots els fills
         imageContainer.removeChild(imageContainer.firstChild);
     }
+    while (bodegaContainer.firstChild) { // borrem tots els fills
+        bodegaContainer.removeChild(bodegaContainer.firstChild);
+    }
+    while (tipoContainer.firstChild) { // borrem tots els fills
+        tipoContainer.removeChild(tipoContainer.firstChild);
+    }
+    while (uvaContainer.firstChild) { // borrem tots els fills
+        uvaContainer.removeChild(uvaContainer.firstChild);
+    }
 
     imageContainer.appendChild(img)
+    bodegaContainer.appendChild(pBodega)
+    tipoContainer.appendChild(pTipo)
+    let pUva = document.createElement('p')
+    pUva.textContent = 'Uva: '
+    uvaContainer.appendChild(pUva)
+
+    for (let i = 0; i < variedad_response.length; i++) {
+        let spanUva = document.createElement('span')
+        if (i == variedad_response.length - 1) {
+            spanUva.textContent = variedad_response[i]['fields']['nombre_variedad']
+        } else {
+            spanUva.textContent = variedad_response[i]['fields']['nombre_variedad'] + ', '
+        }
+        pUva.appendChild(spanUva)
+    }
 }
-
-// def searchWine(request):
-//     if request.method == 'POST':
-//         tipo_vino = int(request.POST['tipo_vino'])
-//         price = int(request.POST['price'])
-//         wines = Vino.objects.filter(
-//             precio_medio__lte=price, 
-//             tipo_id=tipo_vino)
-//         bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
-//         data_wines = serializers.serialize('json', wines)
-//         data_bodegas = serializers.serialize('json', bodegas)
-//         return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
-
-
-
-// def searchWine(request):
-//     if request.method == 'POST':
-//         tipo_vino = int(request.POST['tipo_vino'])
-//         price = int(request.POST['price'])
-//         wines = Vino.objects.filter(
-//             precio_medio__lte=price, 
-//             tipo_id=tipo_vino)
-//         bodegas = Bodega.objects.raw(f"SELECT mainapp_bodega.id, nombre_bodega FROM mainapp_bodega INNER JOIN mainapp_vino ON mainapp_bodega.id = mainapp_vino.bodega_id WHERE precio_medio <= {price} AND tipo_id = {tipo_vino}")
-//         data_wines = serializers.serialize('json', wines)
-//         data_bodegas = serializers.serialize('json', bodegas)
-//         return JsonResponse({"wines": data_wines, "bodegas": data_bodegas})
-
-
-
-
-// RANDOM
-// wines_pk = []
-// for wine in wines:
-//     wines_pk.append({
-//         'pk': wine.id
-//     })
-// vinos_id = {
-//     'wine_pk': wines_pk
-// }
-// # Random id de la consulta de vinos después de filtrar
-// vino_id = vino_id = vinos_id['wine_pk'][random_position]
