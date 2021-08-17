@@ -20,7 +20,7 @@ from django.conf import settings
 # NEW
 from django.conf.urls.static import static
 # END NEW
-
+# https://docs.djangoproject.com/en/3.2/howto/static-files/
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.views.index, name="index"),
