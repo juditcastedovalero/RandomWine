@@ -18,7 +18,7 @@ from django.urls import path
 import mainapp.views
 from django.conf import settings
 # NEW
-from django.config.urls.static import static
+from django.conf.urls.static import static
 # END NEW
 
 urlpatterns = [
