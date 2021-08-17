@@ -25,7 +25,7 @@ SECRET_KEY = 'i$v1gvofv_a+2keir%o(&jx6r$e8=b5u1g!0b!@0prre6ae=m('
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-DEBUG = True
+DEBUG = False
 # if os.environ.get('ENV') == 'PRODUCTION':
 #     DEBUG = False
 # else:
@@ -149,7 +149,8 @@ import dj_database_url
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # if os.environ.get('ENV') == 'PRODUCTION':
 
 #     # Static files settings
