@@ -25,10 +25,11 @@ SECRET_KEY = 'i$v1gvofv_a+2keir%o(&jx6r$e8=b5u1g!0b!@0prre6ae=m('
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-if os.environ.get('ENV') == 'PRODUCTION':
-    DEBUG = False
-else:
-    DEBUG = True
+DEBUG = False
+# if os.environ.get('ENV') == 'PRODUCTION':
+#     DEBUG = False
+# else:
+#     DEBUG = True
 
 ALLOWED_HOSTS = ['randomwine.herokuapp.com', '127.0.0.1']
 
@@ -145,21 +146,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
-if os.environ.get('ENV') == 'PRODUCTION':
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# if os.environ.get('ENV') == 'PRODUCTION':
 
-    # Static files settings
-    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+#     # Static files settings
+#     PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
-    STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+#     STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 
-    # Extra places for collectstatic to find static files.
-    STATICFILES_DIRS = (
-        os.path.join(PROJECT_ROOT, 'static'),
-    )
-    # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#     # Extra places for collectstatic to find static files.
+#     STATICFILES_DIRS = (
+#         os.path.join(PROJECT_ROOT, 'static'),
+#     )
+#     # Simplified static file serving.
+#     # https://warehouse.python.org/project/whitenoise/
+#     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-    db_from_env = dj_database_url.config(conn_max_age=500)
-    DATABASES['default'].update(db_from_env)
+#     db_from_env = dj_database_url.config(conn_max_age=500)
+#     DATABASES['default'].update(db_from_env)
