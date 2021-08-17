@@ -18,7 +18,7 @@ from django.urls import path
 import mainapp.views
 from django.conf import settings
 # NEW
-# from django.conf.urls.static import static
+from django.conf.urls.static import static
 # END NEW
 
 urlpatterns = [
@@ -26,8 +26,7 @@ urlpatterns = [
     path('', mainapp.views.index, name="index"),
     path('kindOfWine/', mainapp.views.kindOfWine),
     path('searchWine/', mainapp.views.searchWine, name="search-wine"),
-] 
-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Configuración para cargar imágenes
 if settings.DEBUG:
