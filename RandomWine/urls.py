@@ -17,13 +17,16 @@ from django.contrib import admin
 from django.urls import path
 import mainapp.views
 from django.conf import settings
+# NEW
+from django.config.urls.static import static
+# END NEW
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.views.index, name="index"),
     path('kindOfWine/', mainapp.views.kindOfWine),
     path('searchWine/', mainapp.views.searchWine, name="search-wine"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Configuración para cargar imágenes
 if settings.DEBUG:
