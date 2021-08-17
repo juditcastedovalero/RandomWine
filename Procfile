@@ -1,0 +1,1 @@
+web: gunicorn RandomWine.wsgi --log-file -
