@@ -25,7 +25,7 @@ SECRET_KEY = 'i$v1gvofv_a+2keir%o(&jx6r$e8=b5u1g!0b!@0prre6ae=m('
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-DEBUG = False
+DEBUG = True
 # if os.environ.get('ENV') == 'PRODUCTION':
 #     DEBUG = False
 # else:
@@ -169,42 +169,3 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 #     db_from_env = dj_database_url.config(conn_max_age=500)
 #     DATABASES['default'].update(db_from_env)
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] '
-                       'pathname=%(pathname)s lineno=%(lineno)s '
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'simple': {
-            'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
-        },
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': True,
-        },
-        'django.request': {
-            'handlers': ['console'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
-    }
-}
