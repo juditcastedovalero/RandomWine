@@ -12,6 +12,7 @@
 <script src="{% static 'js/app.js' %}"></script>
 </head>
 <body id="home">
+    {% csrf_token %}
     {% comment %} KIND OF WINE {% endcomment %}
     <main class="main">    
         <h1>¿No sabes qué vino tomar?</h1>

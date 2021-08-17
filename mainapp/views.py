@@ -26,6 +26,9 @@ def kindOfWine(request):
 
 def searchWine(request):
     if request.method == 'POST':
+        # TOKEN
+        # token = request.POST['token']
+        # END TOKEN
         tipo_vino = int(request.POST['tipo_vino'])
         price = int(request.POST['price'])
         wines_filter = Vino.objects.filter(
@@ -56,5 +59,6 @@ def searchWine(request):
             data_tipo = serializers.serialize('json', tipo_vino)
             data_variedad = serializers.serialize('json', variedad)
             return JsonResponse({"wine": data_wine, "bodega": data_bodega, "tipo": data_tipo, "variedad": data_variedad})
+            # return JsonResponse({"wine": data_wine, "bodega": data_bodega, "tipo": data_tipo, "variedad": data_variedad, "token": token})
 
 
