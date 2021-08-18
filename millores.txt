@@ -1,0 +1,7 @@
+Anotar pujada al servidor
+Models BBDD
+Queries
+Resultat mostrar nom del celler
+Incorporar més vins 
+Veure si es reflecteixen nous canvis BBDD local a servidor
+Amazon comprar vi

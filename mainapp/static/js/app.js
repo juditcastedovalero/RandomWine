@@ -130,11 +130,11 @@ function drawWine(response) {
 
     let error = document.querySelector('.error')
 
-    vino_response = JSON.parse(response.wine);
+    vino_response = JSON.parse(response.vinos);
     bodega_response = JSON.parse(response.bodega);
     tipo_response = JSON.parse(response.tipo);
     variedad_response = JSON.parse(response.variedad);
-    console.log('vino', vino)
+    console.log('vino', vino_response)
     console.log('bodega:', bodega_response)
     console.log('tipo:', tipo_response)
     console.log('variedad:', variedad_response)

@@ -22,9 +22,9 @@ class Tipo(models.Model):
 
 class Vino(models.Model):
     nombre_vino = models.CharField(max_length=150, verbose_name='Nombre del vino')
-    bodega = models.ForeignKey(Bodega, verbose_name="Bodega", on_delete=CASCADE)
-    variedad = models.ManyToManyField(Variedad, verbose_name="Variedad", blank=True)
-    tipo = models.ForeignKey(Tipo, verbose_name="Tipo", on_delete=CASCADE)
+    bodega = models.ForeignKey(Bodega, verbose_name="Bodega", on_delete=CASCADE, related_name="bodegas")
+    variedad = models.ManyToManyField(Variedad, verbose_name="Variedad", blank=True, related_name='vinos')
+    tipo = models.ForeignKey(Tipo, verbose_name="Tipo", on_delete=CASCADE, related_name="tipos")
     precio_medio = models.DecimalField(max_digits=8, decimal_places=2)
     url_imagen = models.ImageField(default='null', verbose_name="Imagen", upload_to='vinos')
     def __str__(self):
