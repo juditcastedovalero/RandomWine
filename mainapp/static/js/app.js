@@ -43,9 +43,8 @@ function kindOfWine() {
         if (ajax.readyState == 4 && ajax.status == 200) {
             response = JSON.parse(ajax.responseText);
             vino = JSON.parse(response.wines);
-            console.log('tipos de vinos', vino)
+            // console.log('tipos de vinos', vino)
             drawForm(vino)
-            // console.log(vino[0]["fields"]["tipo_vino"])
         }
     }
     ajax.open('get', '/kindOfWine', true);
@@ -76,7 +75,7 @@ function searchWines() {
     datasend.append('tipo_vino', tipo_vino);
     datasend.append('price', max_price);
 
-    console.log('token:', csrftoken)
+    // console.log('token:', csrftoken)
 
     var ajax = new objetoAjax();
     ajax.onreadystatechange = function() {
@@ -98,11 +97,15 @@ function drawError() {
 
     let wineContainer = document.getElementById('container-wine')
     let imageContainer = document.getElementById('image')
+    let nombreVinoContainer = document.getElementById('nombre_vino')
     let bodegaContainer = document.getElementById('bodega')
     let tipoContainer = document.getElementById('tipo_vino')
     let uvaContainer = document.getElementById('uva')
     while (imageContainer.firstChild) { // borrem tots els fills
         imageContainer.removeChild(imageContainer.firstChild);
+    }
+    while (nombreVinoContainer.firstChild) { // borrem tots els fills
+        nombreVinoContainer.removeChild(nombreVinoContainer.firstChild);
     }
     while (bodegaContainer.firstChild) { // borrem tots els fills
         bodegaContainer.removeChild(bodegaContainer.firstChild);
@@ -124,6 +127,7 @@ function drawError() {
 function drawWine(response) {
     let wineContainer = document.getElementById('container-wine')
     let imageContainer = document.getElementById('image')
+    let nombreVinoContainer = document.getElementById('nombre_vino')
     let bodegaContainer = document.getElementById('bodega')
     let tipoContainer = document.getElementById('tipo_vino')
     let uvaContainer = document.getElementById('uva')
@@ -134,19 +138,22 @@ function drawWine(response) {
     bodega_response = JSON.parse(response.bodega);
     tipo_response = JSON.parse(response.tipo);
     variedad_response = JSON.parse(response.variedad);
-    console.log('vino', vino_response)
-    console.log('bodega:', bodega_response)
-    console.log('tipo:', tipo_response)
-    console.log('variedad:', variedad_response)
+    // console.log('vino', vino_response)
+    // console.log('bodega:', bodega_response)
+    // console.log('tipo:', tipo_response)
+    // console.log('variedad:', variedad_response)
 
     var currentUrl = window.location.href;
     let img = document.createElement('img')
     img.setAttribute('src', vino_response[0]['fields']['url_imagen'])
     // img.setAttribute('src', currentUrl + 'media/' + vino_response[0]['fields']['url_imagen'])
-    console.log(currentUrl)
+    // console.log(currentUrl)
 
     wineContainer.setAttribute('class', 'container-wine')
 
+    let pNombreVino = document.createElement('p')
+    pNombreVino.textContent = "Vino: "
+    let spanNombreVino = document.createElement('span')
     let pBodega = document.createElement('p')
     pBodega.textContent = "Bodega: "
     let spanBodega = document.createElement('span')
@@ -154,11 +161,15 @@ function drawWine(response) {
     pTipo.textContent = 'Tipo: '
     let spanTipo = document.createElement('span')
 
+    spanNombreVino.textContent = vino_response[0]['fields']['nombre_vino']
     spanBodega.textContent = bodega_response[0]['fields']['nombre_bodega']
     spanTipo.textContent = tipo_response[0]['fields']['tipo_vino']
 
     while (imageContainer.firstChild) { // borrem tots els fills
         imageContainer.removeChild(imageContainer.firstChild);
+    }
+    while (nombreVinoContainer.firstChild) { // borrem tots els fills
+        nombreVinoContainer.removeChild(nombreVinoContainer.firstChild);
     }
     while (bodegaContainer.firstChild) { // borrem tots els fills
         bodegaContainer.removeChild(bodegaContainer.firstChild);
@@ -173,6 +184,8 @@ function drawWine(response) {
     error.textContent = ''
 
     imageContainer.appendChild(img)
+    nombreVinoContainer.appendChild(pNombreVino)
+    pNombreVino.appendChild(spanNombreVino)
     bodegaContainer.appendChild(pBodega)
     pBodega.appendChild(spanBodega)
     tipoContainer.appendChild(pTipo)

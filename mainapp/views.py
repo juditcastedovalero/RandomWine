@@ -22,8 +22,6 @@ def kindOfWine(request):
         data = serializers.serialize('json', response)
         return JsonResponse({"wines": data})
 
-
-
 def searchWine(request):
     if request.method == 'POST':
         # TOKEN
