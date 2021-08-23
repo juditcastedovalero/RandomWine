@@ -26,6 +26,6 @@ class Vino(models.Model):
     variedad = models.ManyToManyField(Variedad, verbose_name="Variedad", blank=True)
     tipo = models.ForeignKey(Tipo, verbose_name="Tipo", on_delete=CASCADE)
     precio_medio = models.DecimalField(max_digits=8, decimal_places=2)
-    url_imagen = models.ImageField(default='null', verbose_name="Imagen", upload_to='vinos')
+    url_imagen = models.URLField()
     def __str__(self):
         return f"{self.nombre_vino} de {self.bodega}"

@@ -141,7 +141,8 @@ function drawWine(response) {
 
     var currentUrl = window.location.href;
     let img = document.createElement('img')
-    img.setAttribute('src', currentUrl + 'media/' + vino_response[0]['fields']['url_imagen'])
+    img.setAttribute('src', vino_response[0]['fields']['url_imagen'])
+    // img.setAttribute('src', currentUrl + 'media/' + vino_response[0]['fields']['url_imagen'])
     console.log(currentUrl)
 
     wineContainer.setAttribute('class', 'container-wine')
